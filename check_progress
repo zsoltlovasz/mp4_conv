@@ -1,0 +1,10 @@
+#!/bin/bash
+
+ls *MP4 | while read i
+do
+	ps aux | grep -v grep | grep -q $i && echo processing && continue
+	n=`basename $i .MP4`
+	[ ! -f lrv/${n}.lrv.mp4 ] && echo not yet done && continue
+	ffmpeg -i $i 2>&1 | grep -i duration
+	ffmpeg -i lrv/${n}.lrv.mp4 2>&1 | grep -i duration
+done 

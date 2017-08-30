@@ -1,0 +1,9 @@
+#!/bin/bash
+
+date
+ls | grep MP4 | while read i
+do
+	n=`basename $i .MP4`
+	[ ! -f lrv/${n}.lrv.mp4 ] && echo $i -b:v 2500k lrv/${n}.lrv.mp4
+done | xargs -L1 --max-procs 4 --verbose ffmpeg -i
+date
