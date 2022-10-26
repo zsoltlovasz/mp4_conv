@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ls | grep -v mp3$ | grep -v url.list | while read f; do nf="$(echo "$f" | sed -e 's/ /_/g' -e 's/\.[^.]*$/.mp3/g' | tr -d "()'[]!")"; [ -e "${nf}" ] && continue; ffmpeg -i "$f" -b:a 128k "${nf}" < /dev/null; done
